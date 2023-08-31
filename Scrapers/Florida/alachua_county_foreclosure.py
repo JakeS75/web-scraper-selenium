@@ -1,5 +1,6 @@
 import time
 import datetime
+import logging
 from dateutil.rrule import rrule, DAILY
 from dateutil.parser import parse
 from selenium import webdriver
@@ -14,6 +15,7 @@ from Utility.lead_database import Lead, Session
 from Utility.lead_database_operations import add_lead_to_database
 from Utility.util import curr_date, status_print
 
+logging.basicConfig(filename="processing.log", level=logging.ERROR, format='%(asctime)s - %(message)s')
 
 class AlachuaCountyForeclosure:
     def __init__(self):
@@ -157,7 +159,7 @@ class AlachuaCountyForeclosure:
                         alachua_county_visited_leads.append(property_address)
                         save_global_list_alachua()
 
-            except TimeoutException:
+            except Exception as e:
                 print("AUCTION_ITEM element not found. Moving on.")
 
         # Add new session to DB
